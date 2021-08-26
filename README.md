@@ -1,12 +1,10 @@
-# ProjSem2FPTCoking
-
-Contributing
+# Contributing
 
 We welcome bug fixes, ehancements, new features, and feedback at email: nminhstickpk@gmail.com
 
 Please contact to me before submit pull requests We use Gitflow, so main branch is reserved for releases.
 
-Contents
+# Contents
 
 Hardware - hardware for this project.
 
