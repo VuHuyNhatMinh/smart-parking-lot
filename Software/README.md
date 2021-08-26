@@ -1,4 +1,4 @@
-# HARDWARE INSTRUCTIONS
+# SOFTWARE INSTRUCTIONS
 
 The documents contained in this repository provide all of the information required to construct and operate a complete hardware platform using in this project.
 
