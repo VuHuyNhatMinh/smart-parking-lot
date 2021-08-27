@@ -38,11 +38,24 @@ def monitoring():
     elif (ans == 'N' or ans == 'n'):
         return 0
 
-def informations():
+def securityScreen():
     # Input: postgre or excel
     # Output: Informations
     os.system("clear")
-    # postgre code 
+    checksecu = 1
+    while (checksecu):
+        print("Security Screen")
+        print("1. Memmber INPUT")
+        print("2. Memmber OUTPUT")
+        print("Your choice: ", end = "")
+        choicesecu = input()
+        if choicesecu == '1':
+            idInput = input("Please Input RFID : ")
+            checksecu = inputMemmber(idInput)
+        elif choicesecu == '2':
+            idOutput = input("Please Input RFID : ")
+            checksecu = outputMember(idOutput)
+        os.system("clear")
 
     print("Do you want to continue[Y/N]? ", end = "")
     ans = input()
@@ -194,7 +207,65 @@ def admin(RFID):
         return 1
     elif (ans == 'N' or ans == 'n'):
         return 0
-def security(RFID):
+def inputMemmber(RFID):
+    try:
+        conn = psycopg2.connect(user="postgres",
+                                    password="1",
+                                    host="localhost",
+                                    port="5432",
+                                    database="postgres")
+        print("Successfully connected!")
+        cursor = conn.cursor()
+        listMember = []
+        print("Input Car_id : ")
+        car_id = input()
+        listMember.append(car_id)
+        print("Input price : ")
+        price = input()
+        listMember.append(price)
+        transaction_id = 'DDMMYYYYHH12MISS'
+        listMember.append(transaction_id)
+        in_time = 'localtimestamp'
+        listMember.append(in_time)
+        
+
+        postgres_insert_query = """ INSERT INTO security (car_id, price, transaction_id, in_time) VALUES (%s,%s,%s,%s)"""
+        cursor.execute(postgres_insert_query, listMember)
+
+        conn.commit()
+        count = cursor.rowcount
+        print(count, "Record inserted successfully into admin table")
+
+        postgreSQL_select_Query = "select * from security"
+        cursor.execute(postgreSQL_select_Query, (RFID,))
+        secu = cursor.fetchall()
+        if cursor.rowcount > 0:
+            print("                This Monitor Member Input           ")
+            print("----------------------------------------------------")
+            for row in secu:
+                    print("ID RIF : ",row[0])
+                    print("Transaction id : ", row[2])
+                    print("Time in : ",row[3])
+        else:
+            print("RFID not have")  
+    
+    except (Exception, psycopg2.Error) as error:
+        print("Failed to insert record into admin table", error)
+
+    finally:
+        # closing database connection.
+        if conn:
+            cursor.close()
+            conn.close()
+            print("PostgreSQL connection is closed")
+            
+    print("Do you want to continue[Y/N]? ", end = "")
+    ans = input()
+    if (ans == 'Y' or ans == 'y'):
+        return 1
+    elif (ans == 'N' or ans == 'n'):
+        return 0
+def outputMember(RFID):
     conn = psycopg2.connect(user="postgres",
                                   password="1",
                                   host="localhost",
@@ -202,19 +273,25 @@ def security(RFID):
                                   database="postgres")
     print("Successfully connected!")
     cursor = conn.cursor()
+    out_time = 'CURRENT_TIMESTAMP'
+    # payment = str((out_time - in_time)* price)
+    postgreSQL_update_Query = "Update mobile set out_time = %s set payment = %s where id = %s"
+    cursor.execute(postgreSQL_update_Query, (out_time,10000,RFID,))
+    conn.commit()
+    count = cursor.rowcount
+    print(count, "Record Updated successfully ")
     postgreSQL_select_Query = "select * from security"
-    cursor.execute(postgreSQL_select_Query)
+    cursor.execute(postgreSQL_select_Query, (RFID,))
     secu = cursor.fetchall()
-    print("                  This Monitor Security             ")
-    print("----------------------------------------------------")
-    ID = input("Please input RIFID : ")
-    print(type(ID))
-    for row in secu:
-            print("ID RIF : ",row[0])
-            print("Money Pay : ",row[1])
-            print("Transaction id : ", row[2])
-            print("Time in : ",row[3])
-            print("Time Out : ", row[4])
+    if cursor.rowcount > 0:
+        print("                This Monitor Member Output           ")
+        print("----------------------------------------------------")
+        for row in secu:
+                print("ID RIF : ",row[0])
+                print("Time in : ",row[3])
+                print("Payment : ", row[4])
+    else:
+        print("RFID not have")  
             
     conn.commit()
     conn.close()
@@ -224,7 +301,6 @@ def security(RFID):
         return 1
     elif (ans == 'N' or ans == 'n'):
         return 0
-
 def menu():
     os.system("clear")
     print("Welcome to project ")
@@ -239,7 +315,8 @@ def menu():
         if choiceAdm == '1':
             check = monitoring()
         elif choiceAdm == '2':
-            check = security()
+            # ID = input("Please input RIFID : ")
+            check = securityScreen()
         elif choiceAdm == '3':
             check = sale()
         os.system("clear")
