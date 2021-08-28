@@ -19,7 +19,7 @@ README.md - instruction for using this repo.
 There are two main problems that we want to tackle in this project.
 1. The economics issue:
 
-- In Viet Nam, there are still a number of parking lots where works such as checking in-out, monitoring are still done manually. This leads to high expenses needed to pay for workers. Our system solve this problems by providing automation solution from auto barrier to automatic checking for whether a car in the field.
+- In Viet Nam, there are still a number of parking lots where works such as checking in-out, monitoring are still done manually. This leads to high expenses needed to pay for workers. Our system solves this problems by providing automation solution from auto barrier to automatic checking for whether a car in the field.
 
 - Moreover, we provide tool that data about member informations, numbers of cars in the field, the sales in day, in month are easily obtained. This helps admin to easily monitor and have an overview on what system has done. Furthermore, by storing data in the database, analysis would be take places in order to make the system to work more efficiently.
 
