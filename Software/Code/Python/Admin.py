@@ -1,5 +1,6 @@
 import os
 import psycopg2
+from datetime import datetime
 
 def printf(str):
     # Output: more friendlier interface
@@ -18,6 +19,7 @@ def monitoring():
         print("2. Seach Memmber")
         print("3. Add Memmber")
         print("4. Delete Memmber")
+        print("5. Go to Menu")
         print("Your choice: ", end = "")
         choiceAdm = input()
         if choiceAdm == '1':
@@ -29,6 +31,8 @@ def monitoring():
             checkAdm = addMemmber()
         elif choiceAdm == '4':
             checkAdm = deleteMemmber()
+        elif choiceAdm == '5':
+            checkAdm = menu()
         os.system("clear")
 
     print("Do you want to continue[Y/N]? ", end = "")
@@ -47,6 +51,7 @@ def securityScreen():
         print("Security Screen")
         print("1. Memmber INPUT")
         print("2. Memmber OUTPUT")
+        print("3. Go to Menu")
         print("Your choice: ", end = "")
         choicesecu = input()
         if choicesecu == '1':
@@ -55,6 +60,8 @@ def securityScreen():
         elif choicesecu == '2':
             idOutput = input("Please Input RFID : ")
             checksecu = outputMember(idOutput)
+        elif choicesecu == '3':
+            checksecu = menu()
         os.system("clear")
 
     print("Do you want to continue[Y/N]? ", end = "")
@@ -81,7 +88,7 @@ def addMemmber():
         print("Input Full Name : ")
         full_name = input()
         listMember.append(full_name)
-        print(listMember)
+        # print(listMember)
 
         postgres_insert_query = """ INSERT INTO admin (car_id, member_id, full_name) VALUES (%s,%s,%s)"""
         cursor.execute(postgres_insert_query, listMember)
@@ -126,33 +133,64 @@ def deleteMemmber():
             cursor.close()
             conn.close()
             print("PostgreSQL connection is closed")
-def sale(RFID):
-    conn = psycopg2.connect(user="postgres",
-                                  password="1",
-                                  host="localhost",
-                                  port="5432",
-                                  database="postgres")
-    print("Successfully connected!")
-    cursor = conn.cursor()
-    postgreSQL_select_Query = "select * from sale"
-    cursor.execute(postgreSQL_select_Query)
-    sale = cursor.fetchall()
-    print("                  This Monitor Sale             ")
-    print("----------------------------------------------------")
-    for row in sale:
-            print("Day : ",row[0])
-            print("Sale In Day : ",row[1])
-            print("Month : ", row[2])
-            print("Sale In Month : ",row[3])
-            
-    conn.commit()
-    conn.close()
-    print("Do you want to continue[Y/N]? ", end = "")
-    ans = input()
-    if (ans == 'Y' or ans == 'y'):
-        return 1
-    elif (ans == 'N' or ans == 'n'):
-        return 0
+def sale():
+    try:
+
+        conn = psycopg2.connect(user="postgres",
+                                    password="1",
+                                    host="localhost",
+                                    port="5432",
+                                    database="postgres")
+        print("Successfully connected!")
+        cursor = conn.cursor()
+        listSale = []
+        print("Input Day : ")
+        day = input()
+        listSale.append(day)
+        print("Input Sale In Day : ")
+        sale_in_day = input()
+        listSale.append(sale_in_day)
+        print("Input Month : ")
+        month = input()
+        listSale.append(month)
+        print("Input Sale In Month : ")
+        sale_in_month = input()
+        listSale.append(sale_in_month)
+        postgres_insert_query = """ INSERT INTO sale (day, sale_in_day, month, sale_in_month) VALUES (%s,%s,%s,%s)"""
+        cursor.execute(postgres_insert_query, listSale)
+
+        conn.commit()
+        count = cursor.rowcount
+        print(count, "Record inserted successfully into sale table")
+
+        postgreSQL_select_Query = "select * from sale"
+        cursor.execute(postgreSQL_select_Query)
+        sale = cursor.fetchall()
+        print("                  This Monitor Sale             ")
+        print("----------------------------------------------------")
+        for row in sale:
+                print("Day : ",row[0])
+                print("Sale In Day : ",row[1])
+                print("Month : ", row[2])
+                print("Sale In Month : ",row[3])
+                
+        conn.commit()
+       
+    except (Exception, psycopg2.Error) as error:
+        print("Failed to insert record into admin table", error)
+
+    finally:
+        # closing database connection.
+        if conn:
+            cursor.close()
+            conn.close()
+            print("PostgreSQL connection is closed")
+        print("Do you want to continue[Y/N]? ", end = "")
+        ans = input()
+        if (ans == 'Y' or ans == 'y'):
+            return 1
+        elif (ans == 'N' or ans == 'n'):
+            return 0
 def adminMemmber():
     conn = psycopg2.connect(user="postgres",
                                   password="1",
@@ -223,13 +261,13 @@ def inputMemmber(RFID):
         print("Input price : ")
         price = input()
         listMember.append(price)
-        transaction_id = 'DDMMYYYYHH12MISS'
-        listMember.append(transaction_id)
-        in_time = 'localtimestamp'
-        listMember.append(in_time)
+        # transaction_id = 'DDMMYYYYHH12MISS'
+        # listMember.append(transaction_id)
+        # in_time = 'localtimestamp'
+        # listMember.append(in_time)
         
 
-        postgres_insert_query = """ INSERT INTO security (car_id, price, transaction_id, in_time) VALUES (%s,%s,%s,%s)"""
+        postgres_insert_query = """ INSERT INTO security (car_id, price, transaction_id, in_time) VALUES (%s,%s,'DDMMYYYY HH12MISS',current_timestamp)"""
         cursor.execute(postgres_insert_query, listMember)
 
         conn.commit()
@@ -273,10 +311,10 @@ def outputMember(RFID):
                                   database="postgres")
     print("Successfully connected!")
     cursor = conn.cursor()
-    out_time = 'CURRENT_TIMESTAMP'
+    # out_time = datetime.datetime.now
     # payment = str((out_time - in_time)* price)
-    postgreSQL_update_Query = "Update mobile set out_time = %s set payment = %s where id = %s"
-    cursor.execute(postgreSQL_update_Query, (out_time,10000,RFID,))
+    postgreSQL_update_Query = "Update security set out_time = current_timestamp , payment = %s where car_id = %s"
+    cursor.execute(postgreSQL_update_Query, (100000,RFID,))
     conn.commit()
     count = cursor.rowcount
     print(count, "Record Updated successfully ")
@@ -289,7 +327,7 @@ def outputMember(RFID):
         for row in secu:
                 print("ID RIF : ",row[0])
                 print("Time in : ",row[3])
-                print("Payment : ", row[4])
+                print("Payment : ", row[5])
     else:
         print("RFID not have")  
             
@@ -311,13 +349,13 @@ def menu():
         print("2. Security Screen")
         print("3. Sale Screen")
         print("Your choice: ", end = "")
-        choiceAdm = input()
-        if choiceAdm == '1':
+        choiceMenu = input()
+        if choiceMenu == '1':
             check = monitoring()
-        elif choiceAdm == '2':
+        elif choiceMenu == '2':
             # ID = input("Please input RIFID : ")
             check = securityScreen()
-        elif choiceAdm == '3':
+        elif choiceMenu == '3':
             check = sale()
         os.system("clear")
 
@@ -326,3 +364,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
