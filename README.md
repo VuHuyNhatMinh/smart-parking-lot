@@ -20,7 +20,7 @@ There are two main problems that we want to tackle in this project.
 
 1. The economics issue: In Viet Nam, there are still a number of parking lots where works such as checking in-out, monitoring are still done manually. This leads to high expenses needed to pay for workers. Moreover, the lost of sales could be happend by workers mistakes either or cheating when collecting fee or wrong calculation.
 
-2.The security issue: Still because of manpower, the chance of losing belongings or even the vehicle is high. For instance, thieves can be pretend as guest and easily take away your property if they have the same ticket as you.
+2. The security issue: Still because of manpower, the chance of losing belongings or even the vehicle is high. For instance, thieves can be pretend as guest and easily take away your property if they have the same ticket as you.
 
 # SOLUTIONS:
 
