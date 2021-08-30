@@ -20,9 +20,9 @@ README.md - instruction for using this repo.
 
 - Ecomony Issuse:
 
-+ Inefficient use of existing parking capacity:  Due to the fact that not dividing space properly or even not doing it, maximizing space is unattainable.
+Inefficient use of existing parking capacity:  Due to the fact that not dividing space properly or even not doing it, maximizing space is unattainable.
 
-+ Confusing parking policies: regulations and usual fees may apply at certain times but not always. Plus, because of human involvement, the wrong when do the calculation of parking fee is inevitable.
+Confusing parking policies: regulations and usual fees may apply at certain times but not always. Plus, because of human involvement, the wrong when do the calculation of parking fee is inevitable.
 
 - Limited security: Without using video surveillance system, our parking lots are vulnerable to threats such as: theft from cars (belongings in the cars or external components), theft of cars or vandalism.
 
@@ -36,11 +36,11 @@ We focus on implement innovations to solve isssue. The technologies we use are:
 
 - Camera surveillance system: 
 
-+ Firstly, cameras are setup in sercurity with automatic number plate recognition algorithm. With RFID technology, this identify the vehicle.
+Firstly, cameras are setup in sercurity with automatic number plate recognition algorithm. With RFID technology, this identify the vehicle.
 
-+ Secondly, cameras in each local check for number of cars inside a parking lot in order to maximizing the use of space.
+Secondly, cameras in each local check for number of cars inside a parking lot in order to maximizing the use of space.
 
-+ Thirdly, the main reason is for monitoring and surveillance.
+Thirdly, the main reason is for monitoring and surveillance.
 
 # WHAT WE HAVE DONE:
 - Designing architecture for our system. This gives a brief understanding of how the data are collected, stored and viewed.
