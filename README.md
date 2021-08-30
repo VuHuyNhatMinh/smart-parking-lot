@@ -1,3 +1,5 @@
+Car Parking Space Management System
+
 # CONTRIBUTING
 
 We welcome bug fixes, ehancements, new features, and feedback at email: nminhstickpk@gmail.com
@@ -16,12 +18,37 @@ README.md - instruction for using this repo.
 
 # PROBLEMS
 
-There are two main problems that we want to tackle in this project.
+- Ecomony Issuse:
 
-1. The economics issue: In Viet Nam, there are still a number of parking lots where works such as checking in-out, monitoring are still done manually. This leads to high expenses needed to pay for workers. Moreover, the lost of sales could be happend by workers mistakes either or cheating when collecting fee or wrong calculation.
++ Inefficient use of existing parking capacity:  Due to the fact that not dividing space properly or even not doing it, maximizing space is unattainable.
 
-2. The security issue: Still because of manpower, the chance of losing belongings or even the vehicle is high. For instance, thieves can be pretend as guest and easily take away your property if they have the same ticket as you.
++ Confusing parking policies: regulations and usual fees may apply at certain times but not always. Plus, because of human involvement, the wrong when do the calculation of parking fee is inevitable.
 
-# SOLUTIONS:
+- Limited security: Without using video surveillance system, our parking lots are vulnerable to threats such as: theft from cars (belongings in the cars or external components), theft of cars or vandalism.
 
-As far as we can tell, reducing manpower could solve these problems so we concentrate to provide automatic solution. Firstly, to solve the economics problem, we apply RFID technology to track car in - out and automatic fee calculation. Secondly, our camera system with the help of further development can monitor 24/7 and track thieves.
+It is because of us not making use of cutting-edge technology that causes these problems. Plus, it is common in Viet Nam to hire low-skilled labor to work at parking lot.
+
+# SOLUTIONS: 
+
+We focus on implement innovations to solve isssue. The technologies we use are:
+
+- RFID technology: RFID is an Automatic Identification and Data Capture (AIDC) technology that uses RF waves to transfer data between a reader and a tagged object. Basically, it is a card with a unique id so if each customer is given a RFID card, vehicle identification can be done automatically. This use of this technology decrease the workload of check-in, out and mantain the records of cars passing by, resulting in automatic fee calculation. Plus, the barrier is also controlled by the system so that it will open only if the vehicle is authentic.
+
+- Camera surveillance system: 
+
++ Firstly, cameras are setup in sercurity with automatic number plate recognition algorithm. With RFID technology, this identify the vehicle.
+
++ Secondly, cameras in each local check for number of cars inside a parking lot in order to maximizing the use of space.
+
++ Thirdly, the main reason is for monitoring and surveillance.
+
+# WHAT WE HAVE DONE:
+- Designing architecture for our system. This gives a brief understanding of how the data are collected, stored and viewed.
+
+- Hardware design for sensor checking car vacancy and transfer data to the database.
+
+- Building admin interface to monitor and observe the system.
+
+- Showing some of the data gathered via website.
+
+
